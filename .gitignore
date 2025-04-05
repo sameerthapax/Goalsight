@@ -18,5 +18,5 @@ models/*.pt
 models/*.pkl
 models/*.h5
 
-# Node modules (if React used)
+# Node modules (if React usd)
 frontend/node_modules/
