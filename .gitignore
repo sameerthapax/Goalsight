@@ -13,10 +13,7 @@ venv/
 data/*.csv
 data/*.xlsx
 
-# Model files
-models/*.pt
-models/*.pkl
-models/*.h5
 
 # Node modules (if React used)
 frontend/node_modules/
+
