@@ -1,0 +1,22 @@
+---Send Request--
+{
+  "home_team": "Fulham",
+  "away_team": "Liverpool",
+  "month": 4,
+  "weekday": 0,
+  "year": 2024,
+  "last_5_home_wins": 1,
+  "last_5_away_wins": 3,
+  "is_weekend": 1,
+  "is_first_half_season": 1
+}
+
+---Receive---
+{
+    "prediction": "Away Win",
+    "probabilities": {
+        "Home Win": 0.1339,
+        "Draw": 0.3311,
+        "Away Win": 0.5349
+    }
+}
