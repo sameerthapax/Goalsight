@@ -39,7 +39,7 @@ goalsight/
 
 ## 👥 Team
 - **Project Manager**: Sameer Thapa ([sameerthapax](https://github.com/sameerthapax))
-- **Contributor**: [Teammate Name]
+- **Contributor**: Aayush Agasti
 
 ## 📄 License
 MIT License
