@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { premierLeagueTeams } from "../data/plTeams.js";
+
 
 const initialForm = {
   month: "",
@@ -9,6 +11,12 @@ const initialForm = {
   is_weekend: "",
   is_first_half_season: "",
 };
+function getEncodingName(teamName) {
+  const team = premierLeagueTeams.find(
+      (t) => t.name === teamName
+  );
+  return team ? team.encodingName : teamName; // Fallback to original if not found
+}
 
 export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
   const [form, setForm] = useState(initialForm);
@@ -32,8 +40,8 @@ export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
     setResult(null);
 
     const payload = {
-      home_team: homeTeam,
-      away_team: awayTeam,
+      home_team: getEncodingName(homeTeam),
+      away_team: getEncodingName(awayTeam),
       month: +form.month,
       weekday: +form.weekday,
       year: +form.year,
