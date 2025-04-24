@@ -1,0 +1,23 @@
+export const premierLeagueTeams = [
+    { name: "Arsenal", logo: "/logos/premier-league/Arsenal.png" },
+    { name: "Aston Villa", logo: "/logos/premier-league/AstonVilla.png" },
+    { name: "Bournemouth", logo: "/logos/premier-league/Bournemouth.png" },
+    { name: "Brentford", logo: "/logos/premier-league/Brentford.png" },
+    { name: "Brighton & Hove Albion", logo: "/logos/premier-league/Brighton&HoveAlbion.png" },
+    { name: "Leicester City", logo: "/logos/premier-league/LeicesterCity.png" },
+    { name: "Chelsea", logo: "/logos/premier-league/Chelsea.png" },
+    { name: "Crystal Palace", logo: "/logos/premier-league/CrystalPalace.png" },
+    { name: "Everton", logo: "/logos/premier-league/Everton.png" },
+    { name: "Fulham", logo: "/logos/premier-league/Fulham.png" },
+    { name: "Liverpool", logo: "/logos/premier-league/Liverpool.png" },
+    { name: "Ipswich Town", logo: "/logos/premier-league/IpswichTown.png" },
+    { name: "Manchester City", logo: "/logos/premier-league/ManchesterCity.png" },
+    { name: "Manchester United", logo: "/logos/premier-league/ManchesterUnited.png" },
+    { name: "Newcastle United", logo: "/logos/premier-league/NewcastleUnited.png" },
+    { name: "Nottingham Forest", logo: "/logos/premier-league/NottinghamForest.png" },
+    { name: "Southampton", logo: "/logos/premier-league/Southampton.png" },
+    { name: "Tottenham Hotspur", logo: "/logos/premier-league/TottenhamHotspur.png" },
+    { name: "West Ham United", logo: "/logos/premier-league/WestHamUnited.png" },
+    { name: "Wolverhampton Wanderers", logo: "/logos/premier-league/WolverhamptonWanderers.png" },
+  ];
+  

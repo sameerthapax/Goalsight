@@ -1,11 +1,17 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 import torch
 import joblib
 import numpy as np
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load model architecture from separate file if needed
 from model_architecture import GoalSightWithEmbeddings
+
+BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH  = os.path.join(BASE_DIR, "..", "models", "goalsight_model.pt")
+ENCODER_PATH = os.path.join(BASE_DIR,"..", "models", "team_encoder.pkl")
 
 # ==== Load model and encoders ====
 model = GoalSightWithEmbeddings(
@@ -16,13 +22,21 @@ model = GoalSightWithEmbeddings(
     output_dim=3
 )
 model.load_state_dict(
-    torch.load("/Users/sams/Desktop/Goalsight/models/goalsight_model.pt", map_location=torch.device('cpu')))
+    torch.load(MODEL_PATH, map_location=torch.device('cpu')))
 model.eval()
 
-le_team = joblib.load("/Users/sams/Desktop/Goalsight/models/team_encoder.pkl")
+le_team = joblib.load(ENCODER_PATH)
 
 # ==== FastAPI app ====
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class MatchInput(BaseModel):
