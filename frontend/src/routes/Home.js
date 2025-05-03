@@ -116,6 +116,13 @@ export default function Home() {
 
   return (
     <div className="max-w-6xl mx-auto mt-12">
+      <div className="flex justify-center mb-6">
+        <img
+        src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg"
+        alt="Premier League"
+        className="h-16 opacity-90"
+        />
+      </div>
       {/* Container with a half-and-half layout + big “VS” in center */}
       <div className="relative w-full h-[70vh] bg-gradient-to-r from-white to-white dark:from-gray-800 dark:to-gray-800 
                       flex overflow-hidden rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
