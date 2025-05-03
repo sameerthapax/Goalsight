@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { premierLeagueTeams } from "../data/plTeams.js";
 
-
 const initialForm = {
   month: "",
   weekday: "",
@@ -11,11 +10,10 @@ const initialForm = {
   is_weekend: "",
   is_first_half_season: "",
 };
+
 function getEncodingName(teamName) {
-  const team = premierLeagueTeams.find(
-      (t) => t.name === teamName
-  );
-  return team ? team.encodingName : teamName; // Fallback to original if not found
+  const team = premierLeagueTeams.find((t) => t.name === teamName);
+  return team ? team.encodingName : teamName;
 }
 
 export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
@@ -24,37 +22,25 @@ export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Date picker fills month, weekday, year, is_weekend, is_first_half_season
   const onDateChange = (e) => {
-    const dateStr = e.target.value; // "YYYY-MM-DD"
+    const dateStr = e.target.value;
     if (!dateStr) return;
-
     const [yr, mo, da] = dateStr.split("-").map(Number);
     const dt = new Date(yr, mo - 1, da);
 
-    // getDay() *always* returns 0=Sun…6=Sat
-    const raw = dt.getDay();
-    // explicit mapping (identity) to “force” the correct number
-    const weekday = [0, 1, 2, 3, 4, 5, 6][raw];
-
-    // month 1–12, year as-is
-    const month = mo;
-    const year = yr;
-
-    // weekend = Sunday (0) or Saturday (6)
+    // 0=Sun…6=Sat
+    const weekday = dt.getDay();
+    // weekend?
     const isWeekend = weekday === 0 || weekday === 6 ? "1" : "0";
-
-    // first‐half of Premier League season:
-    // Aug(8)–Jan(1) => yes, Feb–Jul => no
-    const isFirstHalf =
-      month >= 8 || month <= 1
-        ? "1"
-        : "0";
+    // first half of PL season: Aug(8)–Jan(1)
+    const isFirstHalf = mo >= 8 || mo <= 1 ? "1" : "0";
 
     setForm((f) => ({
       ...f,
-      month: month.toString(),
+      month: mo.toString(),
       weekday: weekday.toString(),
-      year: year.toString(),
+      year: yr.toString(),
       is_weekend: isWeekend,
       is_first_half_season: isFirstHalf,
     }));
@@ -109,7 +95,7 @@ export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white dark:bg-gray-800 rounded shadow flex flex-col">
-      {/* header + reset */}
+      {/* Header + Reset */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
           Predict Match Outcome
@@ -122,13 +108,13 @@ export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
         </button>
       </div>
 
-      {/* teams */}
+      {/* Teams */}
       <div className="mb-6 text-gray-700 dark:text-gray-200 space-y-1">
         <p><strong>Home:</strong> {homeTeam || "—"}</p>
         <p><strong>Away:</strong> {awayTeam || "—"}</p>
       </div>
 
-      {/* date picker */}
+      {/* Date picker */}
       <div className="mb-6">
         <label className="block text-gray-700 dark:text-gray-200 mb-1">
           Match Date
@@ -140,12 +126,28 @@ export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
         />
       </div>
 
-      {/* inputs */}
+      {/* Inputs */}
       <div className="grid grid-cols-2 gap-4">
         {[
           { name: "month", label: "Month (1–12)" },
           { name: "weekday", label: "Weekday (0=Sunday…6=Saturday)" },
-          { name: "year", label: "Year (e.g. 2025)" },
+          { name: "year", label: "Year" },
+        ].map(({ name, label }) => (
+          <div key={name}>
+            <label className="block text-gray-700 dark:text-gray-200 mb-1">
+              {label}
+            </label>
+            <input
+              type="text"
+              name={name}
+              value={form[name]}
+              readOnly
+              className="w-full px-3 py-2 border rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+            />
+          </div>
+        ))}
+
+        {[
           { name: "last_5_home_wins", label: "Last 5 Home Wins" },
           { name: "last_5_away_wins", label: "Last 5 Away Wins" },
         ].map(({ name, label }) => (
@@ -163,40 +165,38 @@ export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
           </div>
         ))}
 
-        {/* dropdowns */}
         <div>
           <label className="block text-gray-700 dark:text-gray-200 mb-1">
             Is Weekend?
           </label>
-          <select
-            name="is_weekend"
-            value={form.is_weekend}
-            onChange={onChange}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-primary dark:bg-gray-700 dark:text-gray-100"
-          >
-            <option value="">-- Select --</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-          </select>
+          <input
+            type="text"
+            value={form.is_weekend === "1" ? "Yes" : form.is_weekend === "0" ? "No" : ""}
+            readOnly
+            className="w-full px-3 py-2 border rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+          />
         </div>
+
         <div>
           <label className="block text-gray-700 dark:text-gray-200 mb-1">
             First Half of Season?
           </label>
-          <select
-            name="is_first_half_season"
-            value={form.is_first_half_season}
-            onChange={onChange}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-primary dark:bg-gray-700 dark:text-gray-100"
-          >
-            <option value="">-- Select --</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-          </select>
+          <input
+            type="text"
+            value={
+              form.is_first_half_season === "1"
+                ? "Yes"
+                : form.is_first_half_season === "0"
+                ? "No"
+                : ""
+            }
+            readOnly
+            className="w-full px-3 py-2 border rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+          />
         </div>
       </div>
 
-      {/* predict button */}
+      {/* Predict button */}
       <button
         onClick={onPredict}
         disabled={!allFilled || loading}
@@ -205,10 +205,10 @@ export default function PredictForm({ homeTeam, awayTeam, resetTeams }) {
         {loading ? "Predicting…" : "Predict"}
       </button>
 
-      {/* error */}
+      {/* Error */}
       {error && <p className="mt-4 text-red-500 font-medium">Error: {error}</p>}
 
-      {/* result */}
+      {/* Result */}
       {result && (
         <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded">
           <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">

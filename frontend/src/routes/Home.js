@@ -1,4 +1,3 @@
-// src/routes/Home.jsx
 import React, { useState, useEffect } from "react";
 import TeamDropdown from "../components/TeamDropdown";
 import PredictForm from "../components/PredictForm";
