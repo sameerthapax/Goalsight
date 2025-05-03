@@ -29,6 +29,12 @@ export default function Home() {
     }
     return { wCount: w, dCount: d, lCount: l };
   }
+  function getEncodingName(teamName) {
+    const team = premierLeagueTeams.find(
+        (t) => t.name === teamName
+    );
+    return team ? team.encodingName2 : teamName; // Fallback to original if not found
+  }
 
   // Color-coded summary
   function colorCodedSummary(w, d, l) {
@@ -99,7 +105,7 @@ export default function Home() {
   // On homeTeam change
   useEffect(() => {
     if (homeTeam) {
-      fetchStats(homeTeam).then(setHomeStats);
+      fetchStats(getEncodingName(homeTeam)).then(setHomeStats);
     } else {
       setHomeStats(null);
     }
@@ -108,7 +114,7 @@ export default function Home() {
   // On awayTeam change
   useEffect(() => {
     if (awayTeam) {
-      fetchStats(awayTeam).then(setAwayStats);
+      fetchStats(getEncodingName(awayTeam)).then(setAwayStats);
     } else {
       setAwayStats(null);
     }
