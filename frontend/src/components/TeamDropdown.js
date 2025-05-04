@@ -1,4 +1,3 @@
-// src/components/TeamDropdown.jsx
 import React, { useState } from "react";
 
 export default function TeamDropdown({ label, teams, value, onChange }) {
